@@ -1,0 +1,20 @@
+name: patrimoine-etat
+
+services:
+  db:
+    image: postgres:18
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:?Base PostgreSQL manquante}
+      POSTGRES_USER: ${POSTGRES_USER:?Utilisateur PostgreSQL manquant}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Mot de passe PostgreSQL manquant}
+    volumes:
+      - patrimoine_db:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U \"$$POSTGRES_USER\" -d \"$$POSTGRES_DB\""]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+
+volumes:
+  patrimoine_db:
