@@ -27,7 +27,7 @@
             </div>
         @endif
 
-        @yield('contenu')
+        @yield('content')
     </main>
 </body>
 </html>
