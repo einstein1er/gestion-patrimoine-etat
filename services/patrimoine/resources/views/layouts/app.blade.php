@@ -12,9 +12,12 @@
             <a href="{{ route('categories.index') }}" class="font-semibold">
                 Gestion du patrimoine
             </a>
-            <nav class="flex gap-4">
+           <nav class="flex gap-4">
                 <a href="{{ route('categories.index') }}" class="text-blue-600 hover:underline">
                     Catégories
+                </a>
+                <a href="{{ route('rapports.index') }}" class="text-blue-600 hover:underline">
+                    Rapports
                 </a>
             </nav>
         </div>
