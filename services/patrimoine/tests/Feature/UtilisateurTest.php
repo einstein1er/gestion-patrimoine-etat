@@ -12,12 +12,28 @@ class UtilisateurTest extends TestCase
 
     public function test_la_page_des_utilisateurs_s_affiche(): void
     {
+        $this->actingAs(Utilisateur::create([
+            'nom' => 'Test Patrimoine',
+            'email' => 'test' . uniqid() . '@patrimoine.ga',
+            'mot_de_passe' => 'motdepasse123',
+            'role' => 'administrateur',
+            'actif' => true,
+        ]));
+
         $this->get(route('utilisateurs.index'))
             ->assertOk();
     }
 
     public function test_on_peut_creer_un_utilisateur(): void
     {
+        $this->actingAs(Utilisateur::create([
+            'nom' => 'Test Patrimoine',
+            'email' => 'test' . uniqid() . '@patrimoine.ga',
+            'mot_de_passe' => 'motdepasse123',
+            'role' => 'administrateur',
+            'actif' => true,
+        ]));
+
         $this->withSession(['_token' => 'jeton-de-test']);
 
         $reponse = $this->post(route('utilisateurs.store'), [

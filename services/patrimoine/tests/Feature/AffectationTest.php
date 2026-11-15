@@ -6,6 +6,7 @@ use App\Models\Affectation;
 use App\Models\Bien;
 use App\Models\Categorie;
 use App\Models\Localisation;
+use App\Models\Utilisateur;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -15,12 +16,28 @@ class AffectationTest extends TestCase
 
     public function test_la_page_des_affectations_s_affiche(): void
     {
+        $this->actingAs(Utilisateur::create([
+            'nom' => 'Test Patrimoine',
+            'email' => 'test' . uniqid() . '@patrimoine.ga',
+            'mot_de_passe' => 'motdepasse123',
+            'role' => 'administrateur',
+            'actif' => true,
+        ]));
+
         $this->get(route('affectations.index'))
             ->assertOk();
     }
 
     public function test_on_peut_creer_une_affectation(): void
     {
+        $this->actingAs(Utilisateur::create([
+            'nom' => 'Test Patrimoine',
+            'email' => 'test' . uniqid() . '@patrimoine.ga',
+            'mot_de_passe' => 'motdepasse123',
+            'role' => 'administrateur',
+            'actif' => true,
+        ]));
+
         $this->withSession(['_token' => 'jeton-de-test']);
 
         $categorie = Categorie::create([
