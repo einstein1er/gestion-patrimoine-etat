@@ -7,6 +7,7 @@ use App\Http\Controllers\LocalisationController;
 use App\Http\Controllers\AffectationController;
 use App\Http\Controllers\MaintenanceController;
 use App\Http\Controllers\RapportController;
+use App\Http\Controllers\UtilisateurController;
 
 
 Route::get('/', function () {
@@ -20,3 +21,4 @@ Route::resource('localisations', LocalisationController::class);
 Route::resource('affectations', AffectationController::class);
 Route::resource('maintenances', MaintenanceController::class);
 Route::get('rapports', [RapportController::class, 'index'])->name('rapports.index');
+Route::resource('utilisateurs', UtilisateurController::class);
