@@ -15,29 +15,30 @@
         </div>
     @else
         <div class="bg-white rounded shadow overflow-hidden">
-            <form action="{{ route('affectations.index') }}" method="GET" class="mb-6 flex flex-wrap gap-3">
+            <form action="{{ route('affectations.index') }}" method="GET" class="mb-6 flex gap-3 p-4">
                 <input
                     type="text"
                     name="recherche"
                     value="{{ request('recherche') }}"
-                    placeholder="Rechercher un bien affecté"
+                    placeholder="Rechercher par bien"
                     class="border rounded p-2 flex-1"
                 >
 
                 <select name="statut" class="border rounded p-2">
                     <option value="">Tous les statuts</option>
-                    <option value="active" {{ request('statut') === 'active' ? 'selected' : '' }}>Active</option>
-                    <option value="terminee" {{ request('statut') === 'terminee' ? 'selected' : '' }}>Terminée</option>
+                    <option value="actives" @selected(request('statut') === 'actives')>Actives</option>
+                    <option value="inactives" @selected(request('statut') === 'inactives')>Inactives</option>
                 </select>
 
                 <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
-                    Filtrer
+                    Rechercher
                 </button>
 
                 <a href="{{ route('affectations.index') }}" class="border px-4 py-2 rounded">
                     Réinitialiser
                 </a>
             </form>
+
             <table class="w-full text-left">
                 <thead class="bg-gray-100">
                     <tr>
@@ -46,6 +47,7 @@
                         <th class="p-3">Début</th>
                         <th class="p-3">Fin</th>
                         <th class="p-3">Responsable</th>
+                        <th class="p-3">Statut</th>
                         <th class="p-3">Actions</th>
                     </tr>
                 </thead>
@@ -58,8 +60,16 @@
                             <td class="p-3">{{ $affectation->date_fin?->format('d/m/Y') ?? '—' }}</td>
                             <td class="p-3">{{ $affectation->responsable ?? '—' }}</td>
                             <td class="p-3">
+                                @if ($affectation->actif)
+                                    <span class="text-green-700">Active</span>
+                                @else
+                                    <span class="text-red-700">Inactive</span>
+                                @endif
+                            </td>
+                            <td class="p-3">
                                 <a href="{{ route('affectations.show', $affectation) }}" class="text-blue-600 hover:underline">Voir</a>
                                 <a href="{{ route('affectations.edit', $affectation) }}" class="text-yellow-600 hover:underline ml-2">Modifier</a>
+
                                 <form action="{{ route('affectations.destroy', $affectation) }}" method="POST" class="inline ml-2"
                                       onsubmit="return confirm('Supprimer cette affectation ?');">
                                     @csrf
@@ -71,11 +81,10 @@
                     @endforeach
                 </tbody>
             </table>
-            {{ $affectations->links() }}
-        </div>
 
-        <div class="mt-4">
-            {{ $affectations->links() }}
+            <div class="p-4">
+                {{ $affectations->links() }}
+            </div>
         </div>
     @endif
 </div>
