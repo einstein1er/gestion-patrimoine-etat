@@ -10,6 +10,7 @@ use App\Http\Controllers\RapportController;
 use App\Http\Controllers\UtilisateurController;
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\DashboardController;
 
 
 Route::get('/', function () {
@@ -17,6 +18,7 @@ Route::get('/', function () {
 });
 
 Route::middleware('auth')->group(function () {
+    Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::middleware('role:administrateur')->group(function () {
         Route::resource('utilisateurs', UtilisateurController::class);
     });

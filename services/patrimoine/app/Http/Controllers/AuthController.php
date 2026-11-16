@@ -40,7 +40,7 @@ class AuthController extends Controller
         $request->session()->regenerate();
 
         return redirect()
-            ->route('rapports.index')
+            ->route('dashboard')
             ->with('succes', 'Connexion réussie.');
     }
 

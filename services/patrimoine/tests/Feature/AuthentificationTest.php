@@ -35,7 +35,7 @@ class AuthentificationTest extends TestCase
             'mot_de_passe' => 'motdepasse123',
         ]);
 
-        $reponse->assertRedirect(route('rapports.index'));
+        $reponse->assertRedirect(route('dashboard'));
         $this->assertAuthenticatedAs($utilisateur);
     }
 
