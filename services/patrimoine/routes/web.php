@@ -29,7 +29,8 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::middleware('role:administrateur,gestionnaire')->group(function () {
-        Route::resource('categories', CategorieController::class);
+        Route::resource('categories', CategorieController::class)
+        ->parameters(['categories' => 'categorie']);
         Route::resource('biens', BienController::class);
         Route::resource('localisations', LocalisationController::class);
         Route::resource('affectations', AffectationController::class);

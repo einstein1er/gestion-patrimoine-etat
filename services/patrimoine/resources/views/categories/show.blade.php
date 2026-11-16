@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('contenu')
+@section('content')
 <div class="mb-6 flex items-center justify-between">
     <h1 class="text-2xl font-semibold">{{ $categorie->nom }}</h1>
     <a href="{{ route('categories.index') }}" class="text-blue-600 hover:underline">
