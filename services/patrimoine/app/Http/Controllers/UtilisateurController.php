@@ -35,7 +35,7 @@ class UtilisateurController extends Controller
 
         return redirect()
             ->route('utilisateurs.index')
-            ->with('succes', 'Utilisateur créé avec succès.');
+            ->with('succes', 'L’utilisateur a été créé avec succès.');
     }
 
     public function show(Utilisateur $utilisateur)

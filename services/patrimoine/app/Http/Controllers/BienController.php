@@ -110,6 +110,6 @@ class BienController extends Controller
 
         return redirect()
             ->route('biens.index')
-            ->with('succes', 'Bien supprimé avec succès.');
+            ->with('succes', 'Le bien a été supprimé avec succès.');
     }
 }

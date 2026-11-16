@@ -67,9 +67,26 @@
 
     <main class="mx-auto max-w-6xl px-4 py-8">
         @if (session('succes'))
-            <div class="mb-4 rounded border border-green-300 bg-green-50 p-3 text-green-800">
-                {{ session('succes') }}
-            </div>
+                <div class="mb-4 rounded border border-green-300 bg-green-50 p-3 text-green-800">
+                    {{ session('succes') }}
+                </div>
+        @endif
+
+        @if (session('erreur'))
+                <div class="mb-4 rounded border border-red-300 bg-red-50 p-3 text-red-800">
+                    {{ session('erreur') }}
+                </div>
+        @endif
+
+        @if ($errors->any())
+                <div class="mb-4 rounded border border-yellow-300 bg-yellow-50 p-3 text-yellow-800">
+                    <p class="font-semibold mb-1">Veuillez corriger les erreurs suivantes :</p>
+                    <ul class="list-disc pl-5">
+                        @foreach ($errors->all() as $erreur)
+                            <li>{{ $erreur }}</li>
+                        @endforeach
+                    </ul>
+                </div>
         @endif
 
         @yield('content')
