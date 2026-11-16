@@ -21,16 +21,18 @@
         <div>
             <label class="block mb-1 font-medium">Nouveau mot de passe</label>
             <input type="password" name="mot_de_passe" class="w-full border rounded p-2">
+            <p class="text-sm text-gray-600 mt-1">Laisser vide pour conserver le mot de passe actuel.</p>
         </div>
 
         <div>
-            <label class="block mb-1 font-medium">Confirmer le nouveau mot de passe</label>
+            <label class="block mb-1 font-medium">Confirmation du mot de passe</label>
             <input type="password" name="mot_de_passe_confirmation" class="w-full border rounded p-2">
         </div>
 
         <div>
             <label class="block mb-1 font-medium">Rôle</label>
             <select name="role" class="w-full border rounded p-2" required>
+                <option value="">Choisir un rôle</option>
                 @foreach (['administrateur', 'gestionnaire', 'consultant'] as $role)
                     <option value="{{ $role }}" @selected(old('role', $utilisateur->role) === $role)>
                         {{ ucfirst($role) }}
@@ -45,7 +47,7 @@
         </label>
 
         <div class="flex gap-3">
-            <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Modifier</button>
+            <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Enregistrer</button>
             <a href="{{ route('utilisateurs.index') }}" class="px-4 py-2 border rounded">Annuler</a>
         </div>
     </form>
