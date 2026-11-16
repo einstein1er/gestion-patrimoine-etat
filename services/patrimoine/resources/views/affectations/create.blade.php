@@ -13,7 +13,7 @@
                 <option value="">Choisir un bien</option>
                 @foreach ($biens as $bien)
                     <option value="{{ $bien->id }}" @selected(old('bien_id') == $bien->id)>
-                        {{ $bien->nom }}
+                        {{ $bien->nom }} ({{ $bien->code }})
                     </option>
                 @endforeach
             </select>
@@ -31,14 +31,16 @@
             </select>
         </div>
 
-        <div>
-            <label class="block mb-1 font-medium">Date de début</label>
-            <input type="date" name="date_debut" value="{{ old('date_debut') }}" class="w-full border rounded p-2" required>
-        </div>
+        <div class="grid grid-cols-2 gap-4">
+            <div>
+                <label class="block mb-1 font-medium">Date de début</label>
+                <input type="date" name="date_debut" value="{{ old('date_debut') }}" class="w-full border rounded p-2" required>
+            </div>
 
-        <div>
-            <label class="block mb-1 font-medium">Date de fin</label>
-            <input type="date" name="date_fin" value="{{ old('date_fin') }}" class="w-full border rounded p-2">
+            <div>
+                <label class="block mb-1 font-medium">Date de fin</label>
+                <input type="date" name="date_fin" value="{{ old('date_fin') }}" class="w-full border rounded p-2">
+            </div>
         </div>
 
         <div>
@@ -48,11 +50,11 @@
 
         <div>
             <label class="block mb-1 font-medium">Observation</label>
-            <textarea name="observation" rows="3" class="w-full border rounded p-2">{{ old('observation') }}</textarea>
+            <textarea name="observation" rows="4" class="w-full border rounded p-2">{{ old('observation') }}</textarea>
         </div>
 
         <label class="flex items-center gap-2">
-            <input type="checkbox" name="actif" value="1" @checked(old('actif'))>
+            <input type="checkbox" name="actif" value="1" @checked(old('actif', true))>
             <span>Affectation active</span>
         </label>
 

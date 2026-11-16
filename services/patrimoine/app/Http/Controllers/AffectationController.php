@@ -20,7 +20,7 @@ class AffectationController extends Controller
             )
             ->when(
                 $request->filled('statut'),
-                fn ($query) => $query->where('statut', $request->statut)
+                fn ($query) => $query->where('actif', $request->statut === 'actives')
             )
             ->latest()
             ->paginate(10)
