@@ -9,16 +9,55 @@
 <body class="bg-gray-100 text-gray-900">
     <header class="bg-white border-b">
         <div class="mx-auto max-w-6xl px-4 py-4 flex items-center justify-between">
-            <a href="{{ route('categories.index') }}" class="font-semibold">
+            <a href="{{ route('rapports.index') }}" class="font-semibold">
                 Gestion du patrimoine
             </a>
-           <nav class="flex gap-4">
-                <a href="{{ route('categories.index') }}" class="text-blue-600 hover:underline">
-                    Catégories
-                </a>
-                <a href="{{ route('rapports.index') }}" class="text-blue-600 hover:underline">
-                    Rapports
-                </a>
+
+            <nav class="flex items-center gap-4">
+                @auth
+                    @if (in_array(auth()->user()->role, ['administrateur', 'gestionnaire']))
+                        <a href="{{ route('categories.index') }}" class="text-blue-600 hover:underline">
+                            Catégories
+                        </a>
+
+                        <a href="{{ route('biens.index') }}" class="text-blue-600 hover:underline">
+                            Biens
+                        </a>
+
+                        <a href="{{ route('localisations.index') }}" class="text-blue-600 hover:underline">
+                            Localisations
+                        </a>
+
+                        <a href="{{ route('affectations.index') }}" class="text-blue-600 hover:underline">
+                            Affectations
+                        </a>
+
+                        <a href="{{ route('maintenances.index') }}" class="text-blue-600 hover:underline">
+                            Maintenances
+                        </a>
+                    @endif
+
+                    @if (auth()->user()->role === 'administrateur')
+                        <a href="{{ route('utilisateurs.index') }}" class="text-blue-600 hover:underline">
+                            Utilisateurs
+                        </a>
+                    @endif
+
+                    <a href="{{ route('rapports.index') }}" class="text-blue-600 hover:underline">
+                        Rapports
+                    </a>
+
+                    <form action="{{ route('logout') }}" method="POST" class="inline">
+                        @csrf
+                        <button class="text-red-600 hover:underline">
+                            Déconnexion
+                        </button>
+                    </form>
+                @else
+                    <a href="{{ route('login') }}" class="text-blue-600 hover:underline">
+                        Connexion
+                    </a>
+                @endauth
             </nav>
         </div>
     </header>
