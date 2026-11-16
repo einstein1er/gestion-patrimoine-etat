@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\DashboardController;
 
 
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -32,6 +33,7 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::get('rapports', [RapportController::class, 'index'])->name('rapports.index');
+    Route::get('rapports/pdf', [RapportController::class, 'exportPdf'])->name('rapports.pdf');
 });
 Route::get('connexion', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('connexion', [AuthController::class, 'login'])->name('login.store');

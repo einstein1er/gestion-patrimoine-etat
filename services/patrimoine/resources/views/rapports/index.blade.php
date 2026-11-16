@@ -3,6 +3,10 @@
 @section('content')
 <div class="max-w-6xl mx-auto p-6">
     <h1 class="text-2xl font-bold mb-6">Rapports du patrimoine</h1>
+    <a href="{{ route('rapports.pdf') }}"
+        class="inline-block bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
+            Télécharger le rapport PDF
+    </a>
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
         <div class="bg-white p-6 rounded shadow">
