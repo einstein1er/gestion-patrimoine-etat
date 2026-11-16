@@ -19,6 +19,9 @@
                         <a href="{{ route('dashboard') }}" class="text-blue-600 hover:underline">
                             Tableau de bord
                         </a>
+                        <a href="{{ route('profil.edit') }}" class="text-blue-600 hover:underline">
+                            Mon profil
+                        </a>
                         <a href="{{ route('categories.index') }}" class="text-blue-600 hover:underline">
                             Catégories
                         </a>
