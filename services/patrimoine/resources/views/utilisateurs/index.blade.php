@@ -31,10 +31,17 @@
                             <td class="p-3">{{ $utilisateur->nom }}</td>
                             <td class="p-3">{{ $utilisateur->email }}</td>
                             <td class="p-3">{{ ucfirst($utilisateur->role) }}</td>
-                            <td class="p-3">{{ $utilisateur->actif ? 'Actif' : 'Inactif' }}</td>
+                            <td class="p-3">
+                                @if ($utilisateur->actif)
+                                    <span class="text-green-700">Actif</span>
+                                @else
+                                    <span class="text-red-700">Inactif</span>
+                                @endif
+                            </td>
                             <td class="p-3">
                                 <a href="{{ route('utilisateurs.show', $utilisateur) }}" class="text-blue-600 hover:underline">Voir</a>
                                 <a href="{{ route('utilisateurs.edit', $utilisateur) }}" class="text-yellow-600 hover:underline ml-2">Modifier</a>
+
                                 <form action="{{ route('utilisateurs.destroy', $utilisateur) }}" method="POST" class="inline ml-2"
                                       onsubmit="return confirm('Supprimer cet utilisateur ?');">
                                     @csrf
@@ -46,10 +53,10 @@
                     @endforeach
                 </tbody>
             </table>
-        </div>
 
-        <div class="mt-4">
-            {{ $utilisateurs->links() }}
+            <div class="p-4">
+                {{ $utilisateurs->links() }}
+            </div>
         </div>
     @endif
 </div>

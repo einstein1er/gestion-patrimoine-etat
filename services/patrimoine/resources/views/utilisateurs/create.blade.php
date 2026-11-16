@@ -32,13 +32,15 @@
             <select name="role" class="w-full border rounded p-2" required>
                 <option value="">Choisir un rôle</option>
                 @foreach (['administrateur', 'gestionnaire', 'consultant'] as $role)
-                    <option value="{{ $role }}" @selected(old('role') === $role)>{{ ucfirst($role) }}</option>
+                    <option value="{{ $role }}" @selected(old('role') === $role)>
+                        {{ ucfirst($role) }}
+                    </option>
                 @endforeach
             </select>
         </div>
 
         <label class="flex items-center gap-2">
-            <input type="checkbox" name="actif" value="1" @checked(old('actif'))>
+            <input type="checkbox" name="actif" value="1" @checked(old('actif', true))>
             <span>Utilisateur actif</span>
         </label>
 
