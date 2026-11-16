@@ -24,4 +24,19 @@ class RapportTest extends TestCase
             ->assertOk()
             ->assertSee('Rapports du patrimoine');
     }
+
+        public function test_on_peut_exporter_le_rapport_pdf(): void
+    {
+        $this->actingAs(Utilisateur::create([
+            'nom' => 'Test Patrimoine',
+            'email' => 'test' . uniqid() . '@patrimoine.ga',
+            'mot_de_passe' => 'motdepasse123',
+            'role' => 'administrateur',
+            'actif' => true,
+        ]));
+
+        $this->get(route('rapports.pdf'))
+            ->assertOk()
+            ->assertHeader('content-type', 'application/pdf');
+    }
 }
