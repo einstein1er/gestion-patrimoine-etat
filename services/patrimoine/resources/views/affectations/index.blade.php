@@ -15,6 +15,29 @@
         </div>
     @else
         <div class="bg-white rounded shadow overflow-hidden">
+            <form action="{{ route('affectations.index') }}" method="GET" class="mb-6 flex flex-wrap gap-3">
+                <input
+                    type="text"
+                    name="recherche"
+                    value="{{ request('recherche') }}"
+                    placeholder="Rechercher un bien affecté"
+                    class="border rounded p-2 flex-1"
+                >
+
+                <select name="statut" class="border rounded p-2">
+                    <option value="">Tous les statuts</option>
+                    <option value="active" {{ request('statut') === 'active' ? 'selected' : '' }}>Active</option>
+                    <option value="terminee" {{ request('statut') === 'terminee' ? 'selected' : '' }}>Terminée</option>
+                </select>
+
+                <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                    Filtrer
+                </button>
+
+                <a href="{{ route('affectations.index') }}" class="border px-4 py-2 rounded">
+                    Réinitialiser
+                </a>
+            </form>
             <table class="w-full text-left">
                 <thead class="bg-gray-100">
                     <tr>
@@ -48,6 +71,7 @@
                     @endforeach
                 </tbody>
             </table>
+            {{ $affectations->links() }}
         </div>
 
         <div class="mt-4">

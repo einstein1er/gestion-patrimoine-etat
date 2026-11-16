@@ -9,11 +9,22 @@ use Illuminate\Http\Request;
 
 class AffectationController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $affectations = Affectation::with('bien', 'localisation')
-            ->orderByDesc('date_debut')
-            ->paginate(10);
+        $affectations = Affectation::with(['bien', 'localisation'])
+            ->when(
+                $request->filled('recherche'),
+                fn ($query) => $query->whereHas('bien', function ($q) use ($request) {
+                    $q->where('nom', 'like', '%' . $request->recherche . '%');
+                })
+            )
+            ->when(
+                $request->filled('statut'),
+                fn ($query) => $query->where('statut', $request->statut)
+            )
+            ->latest()
+            ->paginate(10)
+            ->withQueryString();
 
         return view('affectations.index', compact('affectations'));
     }

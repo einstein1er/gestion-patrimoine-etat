@@ -21,6 +21,32 @@
         </div>
     @else
         <div class="bg-white rounded shadow overflow-hidden">
+            <form action="{{ route('biens.index') }}" method="GET" class="mb-6 flex flex-wrap gap-3">
+                <input
+                    type="text"
+                    name="recherche"
+                    value="{{ request('recherche') }}"
+                    placeholder="Rechercher un bien"
+                    class="border rounded p-2 flex-1"
+                >
+
+                <select name="categorie" class="border rounded p-2">
+                    <option value="">Toutes les catégories</option>
+                    @foreach ($categories as $categorie)
+                        <option value="{{ $categorie->id }}" {{ request('categorie') == $categorie->id ? 'selected' : '' }}>
+                            {{ $categorie->nom }}
+                        </option>
+                    @endforeach
+                </select>
+
+                <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                    Filtrer
+                </button>
+
+                <a href="{{ route('biens.index') }}" class="border px-4 py-2 rounded">
+                    Réinitialiser
+                </a>
+            </form>
             <table class="w-full text-left">
                 <thead class="bg-gray-100">
                     <tr>
@@ -54,6 +80,7 @@
                     @endforeach
                 </tbody>
             </table>
+            {{ $biens->links() }}
         </div>
 
         <div class="mt-4">

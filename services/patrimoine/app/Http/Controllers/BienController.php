@@ -10,13 +10,27 @@ use Illuminate\View\View;
 
 class BienController extends Controller
 {
-    public function index(): View
+    public function index(Request $request): View
     {
-        $biens = Bien::with('categorie')
-            ->orderBy('nom')
-            ->paginate(10);
+        $categories = Categorie::orderBy('nom')->get();
 
-        return view('biens.index', compact('biens'));
+        $biens = Bien::with('categorie')
+            ->when(
+                $request->filled('recherche'),
+                fn ($query) => $query->where(function ($q) use ($request) {
+                    $q->where('nom', 'like', '%' . $request->recherche . '%')
+                        ->orWhere('reference', 'like', '%' . $request->recherche . '%');
+                })
+            )
+            ->when(
+                $request->filled('categorie'),
+                fn ($query) => $query->where('categorie_id', $request->categorie)
+            )
+            ->latest()
+            ->paginate(10)
+            ->withQueryString();
+
+        return view('biens.index', compact('biens', 'categories'));
     }
 
     public function create(): View

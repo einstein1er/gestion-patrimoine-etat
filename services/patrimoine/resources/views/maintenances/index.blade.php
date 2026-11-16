@@ -15,6 +15,30 @@
         </div>
     @else
         <div class="bg-white rounded shadow overflow-hidden">
+            <form action="{{ route('maintenances.index') }}" method="GET" class="mb-6 flex flex-wrap gap-3">
+                <input
+                    type="text"
+                    name="recherche"
+                    value="{{ request('recherche') }}"
+                    placeholder="Rechercher une maintenance"
+                    class="border rounded p-2 flex-1"
+                >
+
+                <select name="statut" class="border rounded p-2">
+                    <option value="">Tous les statuts</option>
+                    <option value="en_attente" {{ request('statut') === 'en_attente' ? 'selected' : '' }}>En attente</option>
+                    <option value="en_cours" {{ request('statut') === 'en_cours' ? 'selected' : '' }}>En cours</option>
+                    <option value="terminee" {{ request('statut') === 'terminee' ? 'selected' : '' }}>Terminée</option>
+                </select>
+
+                <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                    Filtrer
+                </button>
+
+                <a href="{{ route('maintenances.index') }}" class="border px-4 py-2 rounded">
+                    Réinitialiser
+                </a>
+            </form>
             <table class="w-full text-left">
                 <thead class="bg-gray-100">
                     <tr>
@@ -48,6 +72,7 @@
                     @endforeach
                 </tbody>
             </table>
+            {{ $maintenances->links() }}
         </div>
 
         <div class="mt-4">

@@ -8,11 +8,22 @@ use Illuminate\Http\Request;
 
 class MaintenanceController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $maintenances = Maintenance::with('bien')
+            ->when(
+                $request->filled('recherche'),
+                fn ($query) => $query->whereHas('bien', function ($q) use ($request) {
+                    $q->where('nom', 'like', '%' . $request->recherche . '%');
+                })
+            )
+            ->when(
+                $request->filled('statut'),
+                fn ($query) => $query->where('statut', $request->statut)
+            )
             ->orderByDesc('date_maintenance')
-            ->paginate(10);
+            ->paginate(10)
+            ->withQueryString();
 
         return view('maintenances.index', compact('maintenances'));
     }

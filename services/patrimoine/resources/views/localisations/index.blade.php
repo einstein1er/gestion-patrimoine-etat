@@ -15,6 +15,23 @@
         </div>
     @else
         <div class="bg-white rounded shadow overflow-hidden">
+            <form action="{{ route('localisations.index') }}" method="GET" class="mb-6 flex gap-3">
+                <input
+                    type="text"
+                    name="recherche"
+                    value="{{ request('recherche') }}"
+                    placeholder="Rechercher une localisation"
+                    class="border rounded p-2 flex-1"
+                >
+
+                <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                    Rechercher
+                </button>
+
+                <a href="{{ route('localisations.index') }}" class="border px-4 py-2 rounded">
+                    Réinitialiser
+                </a>
+            </form>
             <table class="w-full text-left">
                 <thead class="bg-gray-100">
                     <tr>
@@ -46,6 +63,7 @@
                     @endforeach
                 </tbody>
             </table>
+            {{ $localisations->links() }}
         </div>
 
         <div class="mt-4">

@@ -7,11 +7,16 @@ use Illuminate\Http\Request;
 
 class LocalisationController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $localisations = Localisation::with('parent')
-            ->orderBy('nom')
-            ->paginate(10);
+            ->when(
+                $request->filled('recherche'),
+                fn ($query) => $query->where('nom', 'like', '%' . $request->recherche . '%')
+            )
+            ->latest()
+            ->paginate(10)
+            ->withQueryString();
 
         return view('localisations.index', compact('localisations'));
     }
