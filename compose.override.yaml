@@ -1,0 +1,53 @@
+services:
+  patrimoine:
+    image: patrimoine-php:dev
+    build:
+      context: ./docker/php
+    working_dir: /app
+    user: "${LOCAL_UID:-1000}:${LOCAL_GID:-1000}"
+    volumes:
+      - ./services/patrimoine:/app
+    ports:
+      - "127.0.0.1:8000:8000"
+    environment:
+      APP_ENV: local
+      APP_DEBUG: "true"
+      APP_URL: http://localhost:8000
+      DB_CONNECTION: pgsql
+      DB_HOST: db
+      DB_PORT: "5432"
+      DB_DATABASE: ${POSTGRES_DB:?Base PostgreSQL manquante}
+      DB_USERNAME: ${POSTGRES_USER:?Utilisateur PostgreSQL manquant}
+      DB_PASSWORD: ${POSTGRES_PASSWORD:?Mot de passe PostgreSQL manquant}
+      SESSION_DRIVER: file
+      CACHE_STORE: file
+      QUEUE_CONNECTION: sync
+    command: ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]
+    depends_on:
+      db:
+        condition: service_healthy
+
+  auth:
+    image: auth-php:dev
+    working_dir: /app
+    volumes:
+      - ./auth-service:/app
+    ports:
+      - "127.0.0.1:8001:8000"
+    environment:
+      APP_ENV: local
+      APP_DEBUG: "true"
+      APP_URL: http://localhost:8001
+      DB_CONNECTION: pgsql
+      DB_HOST: db
+      DB_PORT: "5432"
+      DB_DATABASE: auth_db
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres
+      SESSION_DRIVER: file
+      CACHE_STORE: file
+      QUEUE_CONNECTION: sync
+    command: ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]
+    depends_on:
+      db:
+        condition: service_healthy
