@@ -14,7 +14,7 @@ Route::get('/sante', function () {
     ]);
 });
 
-Route::middleware('auth:sanctum')->group(function () {
+Route::middleware('verifier.token')->group(function () {
     Route::apiResource('categories', CategorieController::class);
     Route::apiResource('localisations', LocalisationController::class);
     Route::apiResource('biens', BienController::class);
